@@ -1,5 +1,7 @@
 # Two transiting planet candidates around nearby M dwarfs from an independent TESS search
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23586756.svg)](https://doi.org/10.5281/zenodo.23586756)
+
 **Author:** Sarang Park (박사랑), Korea Science Academy of KAIST. This work was a term project for General Astronomy.
 **First public posting:** 23 October 2026 (see the commit history of this repository).
 
@@ -90,7 +92,7 @@ All results can be reproduced from the public data with the code here.
 This work uses data from the TESS mission, funded by NASA's Science Mission Directorate, obtained from the Mikulski Archive for Space Telescopes (MAST). That includes SPOC and TESS-SPOC (Caldwell et al. 2020) light curves and data-validation products. It also uses data from the ESA *Gaia* mission (Gaia DR3), the TESS Input Catalog v8.2 (Stassun et al. 2019), ExoFOP-TESS and the NASA Exoplanet Archive. Archival MEarth photometry (Berta et al. 2012) was used for G 249-11.
 
 ## How to cite
-See [`CITATION.cff`](CITATION.cff). A Zenodo DOI will be added for tagged releases.
+Park, S. (2026), *Two transiting planet candidates around nearby M dwarfs from an independent TESS search (TIC 198079261, TIC 366760231)*, Zenodo, [doi:10.5281/zenodo.23586756](https://doi.org/10.5281/zenodo.23586756) (all versions; v1.0.0 = [10.5281/zenodo.23586757](https://doi.org/10.5281/zenodo.23586757)). See also [`CITATION.cff`](CITATION.cff).
 
 ## License
 Code: MIT (see `LICENSE`). Text, figures and tables: CC BY 4.0.

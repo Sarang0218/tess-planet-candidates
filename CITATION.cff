@@ -7,6 +7,7 @@ authors:
     affiliation: "Korea Science Academy of KAIST"
 date-released: 2026-10-23
 version: "1.0.0"
+doi: "10.5281/zenodo.23586756"
 url: "https://github.com/Sarang0218/tess-planet-candidates"
 license: MIT
 keywords: [exoplanets, TESS, transit photometry, M dwarfs, planet candidates]
