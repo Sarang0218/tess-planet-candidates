@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use these planet candidates or this code, please cite it as below."
+title: "Two transiting planet candidates around nearby M dwarfs from an independent TESS search (TIC 198079261, TIC 366760231)"
+authors:
+  - family-names: "Park"
+    given-names: "Sarang"
+    affiliation: "Korea Science Academy of KAIST"
+date-released: 2026-10-23
+version: "1.0.0"
+url: "https://github.com/Sarang0218/tess-planet-candidates"
+license: MIT
+keywords: [exoplanets, TESS, transit photometry, M dwarfs, planet candidates]
