@@ -135,7 +135,7 @@ All results can be reproduced from the public data with the code here.
 This work uses data from the TESS mission, funded by NASA's Science Mission Directorate, obtained from the Mikulski Archive for Space Telescopes (MAST). That includes SPOC and TESS-SPOC (Caldwell et al. 2020) light curves and data-validation products. It also uses data from the ESA *Gaia* mission (Gaia DR3), the TESS Input Catalog v8.2 (Stassun et al. 2019), ExoFOP-TESS and the NASA Exoplanet Archive. Archival MEarth photometry (Berta et al. 2012) was used for G 249-11.
 
 ## How to cite
-Park, S. (2026), *Transiting planet candidates around nearby M dwarfs from an independent TESS search (TIC 366760231.01 and .02; independent recovery of TIC 198079261.01)*, Zenodo, [doi:10.5281/zenodo.23586756](https://doi.org/10.5281/zenodo.23586756) (all versions; v1.0.0 = [10.5281/zenodo.23586757](https://doi.org/10.5281/zenodo.23586757)). If you cite TIC 198079261.01, please cite Lastovka et al. 2026 for the first report. See also [`CITATION.cff`](CITATION.cff).
+Park, S. (2026), *Transiting planet candidates around nearby M dwarfs from an independent TESS search (TIC 366760231.01 and .02; independent recovery of TIC 198079261.01)*, Zenodo, [doi:10.5281/zenodo.23586756](https://doi.org/10.5281/zenodo.23586756) (all versions; v1.1.0 = [10.5281/zenodo.24250206](https://doi.org/10.5281/zenodo.24250206), v1.0.0 = [10.5281/zenodo.23586757](https://doi.org/10.5281/zenodo.23586757)). If you cite TIC 198079261.01, please cite Lastovka et al. 2026 for the first report. See also [`CITATION.cff`](CITATION.cff).
 
 ## License
 Code: MIT (see `LICENSE`). Text, figures and tables: CC BY 4.0.
