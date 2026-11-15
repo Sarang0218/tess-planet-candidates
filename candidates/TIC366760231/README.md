@@ -1,6 +1,7 @@
 # TIC 366760231: a new candidate ~2 R⊕ planet on a 3.14-day orbit around a nearby M dwarf
 
 **Status:** new planet candidate from an independent search of public TESS data. Not confirmed.
+**Update 2026-11-16 (v1.1.0):** a second transit signal at 1.1434 d was found on this star; see [signal_02](signal_02/README.md). A joint transit-model fit of both signals also refines this signal's ephemeris to **P = 3.137316 ± 0.000005 d, T0 = 2459404.40233 ± 0.00084 BJD_TDB** (depth 1810 ppm, T14 = 0.67 h, Rp = 2.03 R⊕). Predicted times from the refined ephemeris are in `signal_02/upcoming_01.md` and are about 6 min earlier in November 2026 than `upcoming_transits.md`.
 Checked on 2026-10-21. The signal is not a TOI, a CTOI or a confirmed planet. It is not in any of the 132 SPOC TCE catalogs (single- and multi-sector, through sector 96). It is not in the public candidate lists of the independent projects *ahrazzle/exoplanets* (~530 candidates) or *tess-transit-hunter*. A web search on its TIC, 2MASS and Gaia identifiers returns nothing. ExoFOP lists no follow-up observations for this star.
 
 ## Host star (TIC v8.2 / Gaia DR3)

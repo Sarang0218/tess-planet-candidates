@@ -1,6 +1,9 @@
-# TIC 198079261: a candidate Earth-sized planet on a 2.82-day orbit around a nearby ultracool (M6–M7) dwarf
+# TIC 198079261.01: independent recovery of a candidate Earth-sized planet on a 2.82-day orbit around a nearby ultracool (M6–M7) dwarf
 
-**Status:** new planet candidate from an independent search of public TESS full-frame-image (FFI) light curves. Not confirmed.
+**Status (corrected 2026-11-16):** planet candidate, **first reported by Lastovka, Barclay, Wilson & Gilbert 2026** ([arXiv:2610.28518](https://arxiv.org/abs/2610.28518), submitted 2026-10-20, where it is TIC 198079261.01, "the smallest planet candidate detected in our survey"). This page is an independent recovery from a separate search of public TESS full-frame-image (FFI) light curves, first posted 2026-10-23 without knowledge of that paper. Version 1.0.0 of this page wrongly called the signal new. Not confirmed.
+Their values: P = 2.8176200 d, depth 5512 ppm, Rp = 0.97 ± 0.12 R⊕, FPP = 0.127. They agree with the values below.
+
+The paragraph below records the checks made on 2026-10-21, before the first posting. They did not include an arXiv search, so the paper above (submitted the day before) was missed.
 Checked on 2026-10-21. The signal is not a TOI, a CTOI or a confirmed planet. It is not in any SPOC 2-min TCE catalog (132 runs through sector 96), and it is not a TESS-SPOC FFI TCE: the star has no data-validation products in any of the 51 TESS-SPOC DV releases. It is not in the public candidate lists of *ahrazzle/exoplanets* or *tess-transit-hunter*. A web search on its TIC, 2MASS and Gaia identifiers returns nothing. ExoFOP lists no follow-up observations.
 
 ## Host star (TIC v8.2 / Gaia DR3)

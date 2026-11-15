@@ -9,6 +9,8 @@ Research scripts as used for this search. They are not a polished package: paths
 | Triage and vetting | `triage3.py` (flags and catalog cross-match), `ffi_tce.py` (TESS-SPOC FFI TCE lookup), `final_candidates.py` |
 | ML vetter | `views.py`, `cnn_model.py`, `gen_train.py` (injections), `build_real.py` (TOI/EB labels), `build_domain_set.py`, `train_vetter3.py`, `vet3_gbm.py` |
 | Deep vetting | `deep_vet.py` (2-min), `ffi_deep.py` (FFI independent-sector test), `vet_ffi_generic.py` (Gaia neighbours, difference-image PSF fit, TRICERATOPS), `single_event_check.py`, `extra_sectors_366760231.py`, `tric_366760231.py` |
+| All-sector re-search (v1.1.0) | `deep2_avail.py`, `deep2_targets.py` (which stars have unused sectors), `deep2_fetch.py` (all sectors, per-sector noise), `deep2_core.py` (weighted multi-year BLS), `deep2_search.py`, `deep2_triage.py`, `deep2_null.py` (inverted and scrambled noise-floor test) |
+| TIC 366760231.02 | `vet_second_366760231.py`, `fit2_366760231.py` (two-signal fit, shared stellar density), `ephem2_366760231.py`, `pix2_366760231.py`, `tric2_366760231.py`, `evidence2_366760231.py` |
 | Fits and figures | `fit_*.py` (batman + emcee), `ephem_*.py` (linear ephemerides), `evidence_198079261.py` |
 
 Main dependencies: numpy, pandas, astropy, lightkurve, torch, batman-package, emcee, triceratops (a small compatibility shim was needed for pytransit ≥ 2.6), scikit-learn, astroquery.
