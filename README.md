@@ -3,7 +3,69 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23586756.svg)](https://doi.org/10.5281/zenodo.23586756)
 
 **Author:** Sarang Park (박사랑), Korea Science Academy of KAIST. This work was a term project for General Astronomy.
-**First public posting:** 23 October 2026. **Updated:** 16 November 2026 (v1.1.0). See the commit history of this repository.
+**First public posting:** 23 October 2026. **Updated:** 16 November 2026 (v1.2.0). See the commit history of this repository.
+
+## Update, 16 November 2026 (v1.2.0)
+
+The all-sector re-search started in v1.1.0 (every available TESS sector for each star) has now covered about 6,300 of 27,500 stars. This version adds six signals that pass the checks listed below. All six are **planet candidates, not confirmed planets**, and the search is still running.
+
+### Three signals with no earlier detection that I could find
+
+No TOI, CTOI, SPOC or TESS-SPOC TCE, or entry in the lists named under the tables.
+
+| | [**TIC 9066956.01**](candidates/TIC9066956/README.md) | [**TIC 166760940.01**](candidates/TIC166760940/README.md) | [**TIC 207503003.01**](candidates/TIC207503003/README.md) |
+|---|---|---|---|
+| Star | 2MASS J23462610−1147476 | LEHPM 2538 | LP 137-33 |
+| TESS mag, distance | 13.86, 90 pc | 14.74, 88 pc | 14.46, 67 pc |
+| Period (d) | 0.713448 ± 0.000001 | 3.102854 ± 0.000005 | 0.541886 ± 0.000001 |
+| Mid-transit (BJD_TDB) | 2460198.51948 ± 0.00060 | 2460184.71033 ± 0.00181 | 2460368.69833 ± 0.00170 |
+| Depth (ppm) | 5335 ± 307 | 17035 ± 1173 | 2620 (+391/−341) |
+| Duration T14 (h) | 0.71 ± 0.03 | 1.09 ± 0.06 | 0.55 ± 0.06 |
+| Radius (R⊕) | 2.81 ± 0.18 | 3.58 ± 0.25 | 1.29 ± 0.13 |
+| Equilibrium temperature (A = 0) | 904 K | 486 K | 841 K |
+| Search SNR (highest in scrambled copies) | 17.0 (7.4) | 13.4 (7.0) | 8.6 (6.7) |
+| Sectors with positive depth | 5 of 5 | 4 of 4 | 16 of 16 |
+| Pixel fit: nearest star able to mimic it | disfavoured at 3.5σ | disfavoured at 5.9σ | disfavoured at 6.0σ |
+| TRICERATOPS FPP / NFPP | 0.035 ± 0.004 / < 0.001 | 0.30 ± 0.02 / 0.21 | 0.114 / 0.019 |
+| Main weakness | a 2.8 R⊕ planet at 0.71 d would be rare | **low confidence:** FPP 0.30, Rp/R★ = 0.12 | **low SNR:** seen only when 16 sectors are added |
+
+### Three pipeline detections (TCEs) that never became TOIs, vetted here
+
+These are **not first detections**. The SPOC or TESS-SPOC pipeline lists an automatic threshold-crossing event (TCE) at the same period for each star, but none has a TOI or CTOI. What is new here is the independent detection with all sectors and the vetting.
+
+| | [**TIC 38699429.01**](candidates/TIC38699429/README.md) | [**TIC 61710094.01**](candidates/TIC61710094/README.md) | [**TIC 149390648.01**](candidates/TIC149390648/README.md) |
+|---|---|---|---|
+| Star | 2MASS J04244516−6200307 | LP 931-48 | 2MASS J05361762−6212152 |
+| TESS mag, distance | 15.27, 58 pc | 11.05, 24 pc | 13.36, 74 pc |
+| Pipeline TCE | TESS-SPOC FFI, sectors 56–69, 11.7187 d | SPOC 2-min, three multi-sector runs, 1.8389 d | SPOC 2-min, sectors 1–96, 2.8369 d |
+| Period (d) | 11.718158 ± 0.000015 | 1.838963 ± 0.000002 | 2.836870 ± 0.000009 |
+| Mid-transit (BJD_TDB) | 2460005.22428 ± 0.00099 | 2460886.07295 ± 0.00119 | 2460201.90485 ± 0.00313 |
+| Depth (ppm) | 27419 (+1039/−1170) | 810 (+63/−74) | 898 (+99/−104) |
+| Duration T14 (h) | 1.43 ± 0.04 | 0.97 ± 0.05 | 1.12 ± 0.10 |
+| Radius (R⊕) | 2.81 ± 0.18 | 1.02 ± 0.08 | 1.07 ± 0.09 |
+| Equilibrium temperature (A = 0) | 248 K | 654 K | 575 K |
+| Search SNR (highest in scrambled copies) | 27.5 (6.6) | 12.0 (6.2) | 10.3 (6.7) |
+| Sectors with positive depth | all 31 | 4 of 4 | 39 of 42 |
+| Pixel fit: nearest star able to mimic it | disfavoured at 12.4σ | not separable (a T = 18.6 star 5″ away) | disfavoured at 2.6σ |
+| TRICERATOPS FPP / NFPP | 0.014 ± 0.006 / 0.0012 | 0.074 ± 0.007 / 0.005 | 0.056 ± 0.006 / < 0.001 |
+
+TIC 38699429 was listed in earlier versions of this page under "reported earlier by others" because of its pipeline TCE. With all 31 sectors it is a 2.7 % deep, flat-bottomed transit every 11.7 d on a ~2900 K M dwarf, which corresponds to a 2.8 R⊕ object receiving about 0.6 times the Earth's insolation. I do not know whether the TESS team has reviewed this TCE and set it aside.
+
+![TIC 38699429 evidence sheet](candidates/TIC38699429/EVIDENCE_TIC38699429.png)
+
+**Read these numbers with the following in mind.**
+- The FPP values are optimistic: TRICERATOPS could not evaluate background-star scenarios here (no field-star population was available), and it does not use the pixel-fit result.
+- Radii scale with the TIC stellar radii, which are uncertain by 10 % or more for the coolest stars.
+- Each candidate page has its own list of caveats. Please read it before using a candidate.
+
+**Lists checked for the six stars (16 November 2026):** the TOI and CTOI lists by TIC number and by position within 3′; ExoFOP-TESS; the NASA Exoplanet Archive; SPOC 2-min TCEs and the TESS-SPOC FFI TCE index; Lastovka et al. 2026; the T16 Planet Hunt candidates (Roth et al. 2026, [arXiv:2604.18579](https://arxiv.org/abs/2604.18579)); DIAmante (Montalto et al. 2020, 2023); NEMESIS (Feliz et al. 2021, [arXiv:2103.05647](https://arxiv.org/abs/2103.05647)); Gillis, Cloutier & Pass 2026 ([arXiv:2602.23364](https://arxiv.org/abs/2602.23364)); the two community lists named below; and the SIMBAD bibliography of each star.
+
+**Checks added in this version.**
+1. **Noise floor with the signal removed.** The same search is run on 20–30 copies of each light curve in which every sector is shifted by a random offset, after masking the candidate's own transits.
+2. **Joint pixel localisation** (`code/deep2_loc.py`). The in-transit difference images of all available sectors are fitted together with one point source, after moving every catalogue star to its position at the time of observation. The fit says how strongly each neighbouring star is disfavoured, and is accurate to about 4″. It replaces the per-sector centroid test used for the first results, which understated offsets in crowded stamps. As a control it places both TOI-218 signals on the correct star of a 13.5″ pair.
+3. **Known objects on neighbouring stars** (`code/deep2_nbcheck.py`): a positional match against the TOI and CTOI lists and an ID match of every TIC neighbour within 120″.
+
+**TIC 366760231 with the new pixel fit.** Using all nine sectors, both signals are on the target, and the 12″ neighbour TIC 366760226 is disfavoured at 2.8σ for each. This is somewhat stronger than the v1.1.0 statement that the neighbour could not be separated, but it is not a decisive exclusion.
 
 ## Update, 16 November 2026 (v1.1.0)
 
@@ -66,7 +128,7 @@ Their transit epoch projected forward 609 orbits lands 10 minutes from ours.
 | TRICERATOPS FPP / NFPP | 0.16 ± 0.01 / 0.005 | 0.26 ± 0.02 / < 0.001 |
 | Details | [candidates/TIC198079261](candidates/TIC198079261/README.md) | [candidates/TIC366760231](candidates/TIC366760231/README.md) |
 
-Machine-readable ephemerides and fits are in `candidates/*/ephemeris.json` and `candidates/*/fit_results.json`. Predicted transit times are in `candidates/*/upcoming_transits.md`. A 9-page summary of v1.0.0 is in [`report/TESS_planet_candidates_report.pdf`](report/TESS_planet_candidates_report.pdf). It predates this update: it still calls TIC 198079261 new and does not include TIC 366760231.02 (see [`report/ERRATUM.md`](report/ERRATUM.md)).
+Machine-readable ephemerides and fits are in `candidates/*/ephemeris.json` and `candidates/*/fit_results.json`. Predicted transit times are in `candidates/*/upcoming_transits.md`. A 9-page summary of v1.0.0 is in [`report/TESS_planet_candidates_report.pdf`](report/TESS_planet_candidates_report.pdf). It predates the updates: it still calls TIC 198079261 new and does not include TIC 366760231.02 or the v1.2.0 candidates (see [`report/ERRATUM.md`](report/ERRATUM.md)).
 
 ![TIC 198079261 evidence sheet](candidates/TIC198079261/EVIDENCE_TIC198079261.png)
 
@@ -105,7 +167,7 @@ Machine-readable ephemerides and fits are in `candidates/*/ephemeris.json` and `
    - rotation-harmonic and shared-ephemeris systematics tests;
    - cross-matching against TOIs, CTOIs, the Exoplanet Archive, all SPOC and TESS-SPOC TCEs, the TESS EB catalog and public community lists;
    - a CNN-ensemble plus gradient-boosting vetter (ranking only), trained on injected transits, TOI dispositions, TESS EBs and labelled search signals.
-5. **All-sector re-search (v1.1.0, in progress):** the first pass used at most 6–8 sectors per star. Stars with at least twice as much data are being re-searched with every available sector (TESS-SPOC FFI light curves preferred), per-sector noise weights and a period grid matched to the multi-year baseline. TIC 366760231.02 is the first result.
+5. **All-sector re-search (v1.1.0 onward, in progress):** the first pass used at most 6–8 sectors per star. Stars with at least twice as much data are being re-searched with every available sector (TESS-SPOC FFI light curves preferred), per-sector noise weights and a period grid matched to the multi-year baseline. One-off dips are masked so that they do not use up the three search slots, and the first and last hours of each orbit are trimmed. A gradient-boosting classifier trained on injected transits and scrambled light curves ranks the weaker peaks. TIC 366760231.02 was the first result; the six signals of v1.2.0 come from the first 6,300 stars.
 6. **Deep vetting of top candidates:**
    - independent-sector recovery with a look-elsewhere-calibrated null;
    - alias scans and per-sector depths;
@@ -122,7 +184,11 @@ These signals are **not** claimed here. They are listed to credit the earlier re
 - **G 249-11 = TIC 417732194** (P = 5.307 d): posted first by [tess-transit-hunter](https://comdex4.github.io/tess-transit-hunter/findings.html) on 2026-10-05. Our independent analysis also finds a 3.1σ dip at the predicted times in archival MEarth-North photometry from 2011–12.
 - **TIC 355815567** (P = 3.519 d): in the [ahrazzle/exoplanets](https://github.com/ahrazzle/exoplanets) candidate list.
 - **TIC 286763141** (P = 7.349 d, second signal on TOI-6284): SPOC multi-sector TCE.
-- **TIC 38699429** (P = 11.718 d): TESS-SPOC FFI TCE (sectors 56–69).
+- **TIC 38699429** (P = 11.718 d): TESS-SPOC FFI TCE (sectors 56–69). Vetted in v1.2.0; see the update at the top of this page.
+- **TIC 61710094** (P = 1.839 d) and **TIC 149390648** (P = 2.837 d): SPOC 2-min TCEs. Vetted in v1.2.0; see the update at the top of this page.
+- **TOI-218.01 and .02** (P = 0.438 d and 8.352 d): recovered in the light curve of TIC 32090581, the equally bright companion 13.5″ from the TOI-218 host TIC 32090583. The pixel fit places both dips on TIC 32090583.
+- **TIC 149927512** (P = 1.4647 d): Gillis, Cloutier & Pass 2026, [arXiv:2602.23364](https://arxiv.org/abs/2602.23364).
+- **TIC 137609439** (P = 4.294 d): in the [ahrazzle/exoplanets](https://github.com/ahrazzle/exoplanets) candidate list.
 
 ## AI assistance
 This project was carried out with substantial help from an AI assistant, **Claude (Anthropic)**, working under the author's direction.
@@ -135,7 +201,7 @@ All results can be reproduced from the public data with the code here.
 This work uses data from the TESS mission, funded by NASA's Science Mission Directorate, obtained from the Mikulski Archive for Space Telescopes (MAST). That includes SPOC and TESS-SPOC (Caldwell et al. 2020) light curves and data-validation products. It also uses data from the ESA *Gaia* mission (Gaia DR3), the TESS Input Catalog v8.2 (Stassun et al. 2019), ExoFOP-TESS and the NASA Exoplanet Archive. Archival MEarth photometry (Berta et al. 2012) was used for G 249-11.
 
 ## How to cite
-Park, S. (2026), *Transiting planet candidates around nearby M dwarfs from an independent TESS search (TIC 366760231.01 and .02; independent recovery of TIC 198079261.01)*, Zenodo, [doi:10.5281/zenodo.23586756](https://doi.org/10.5281/zenodo.23586756) (all versions; v1.1.0 = [10.5281/zenodo.24250206](https://doi.org/10.5281/zenodo.24250206), v1.0.0 = [10.5281/zenodo.23586757](https://doi.org/10.5281/zenodo.23586757)). If you cite TIC 198079261.01, please cite Lastovka et al. 2026 for the first report. See also [`CITATION.cff`](CITATION.cff).
+Park, S. (2026), *Transiting planet candidates around nearby M dwarfs from an independent TESS search*, Zenodo, [doi:10.5281/zenodo.23586756](https://doi.org/10.5281/zenodo.23586756) (all versions; v1.1.0 = [10.5281/zenodo.24250206](https://doi.org/10.5281/zenodo.24250206), v1.0.0 = [10.5281/zenodo.23586757](https://doi.org/10.5281/zenodo.23586757)). If you cite TIC 198079261.01, please cite Lastovka et al. 2026 for the first report. See also [`CITATION.cff`](CITATION.cff).
 
 ## License
 Code: MIT (see `LICENSE`). Text, figures and tables: CC BY 4.0.

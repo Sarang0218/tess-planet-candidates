@@ -88,9 +88,41 @@ def stats(t, y, w, P, t0, dur):
                 half=d_half[0] * 1e6, half_e=d_half[1] * 1e6, ntr=int(len(per)), top2_frac=float(top2), med_ratio=float(medr))
 
 
+def prewhiten_lowmem(t, f, nmax=4, pmin=0.02, pmax=5.0, amp_snr=8.0, budget=1.2e7):
+    """Same algorithm as search_core.prewhiten, with the periodogram evaluated in memory-bounded chunks (the GPU is shared)."""
+    dev = 'cuda'; tt = torch.tensor(t - t.min(), dtype=torch.float32, device=dev); y = torch.tensor(f - np.median(f), dtype=torch.float32, device=dev)
+    B = float(tt.max()); fr = torch.arange(1 / pmax, 1 / pmin, 1 / (5 * B), device=dev); ch = int(max(32, min(2048, budget // len(f))))
+    sig = float(1.4826 * np.median(np.abs(f - np.median(f)))); removed = []
+    for _ in range(nmax):
+        pw = torch.zeros_like(fr)
+        for i in range(0, len(fr), ch):
+            w = 2 * np.pi * fr[i:i + ch, None] * tt[None, :]
+            pw[i:i + ch] = 2 * torch.sqrt((y[None] * torch.cos(w)).mean(1) ** 2 + (y[None] * torch.sin(w)).mean(1) ** 2); del w
+        j = int(torch.argmax(pw)); amp = float(pw[j]); f0 = float(fr[j])
+        if amp < amp_snr * sig / np.sqrt(len(f)) * 2 or amp < 3e-4: break
+        cols = [torch.ones_like(tt)]
+        for h in (1, 2, 3): cols += [torch.cos(2 * np.pi * h * f0 * tt), torch.sin(2 * np.pi * h * f0 * tt)]
+        A = torch.stack(cols, 1); edges = np.r_[0, np.flatnonzero(np.diff(t) > 0.5) + 1, len(t)]
+        for a, b in zip(edges[:-1], edges[1:]):
+            if b - a < 50: continue
+            coef = torch.linalg.lstsq(A[a:b], y[a:b, None]).solution; y[a:b] = y[a:b] - (A[a:b] @ coef)[:, 0]
+        removed.append((1 / f0, amp))
+    return y.cpu().numpy() + np.median(f), removed
+
+
+def limit_gpu(gb=2.0):
+    """Hard cap on this process's GPU memory, so a shared card is never pushed into system-memory fallback."""
+    tot = torch.cuda.get_device_properties(0).total_memory; torch.cuda.set_per_process_memory_fraction(min(0.9, gb * 2 ** 30 / tot))
+
+
 def prepare(t, f, s, bad):
     """Bad-time mask, isolated-outlier cut, per-season rotation prewhitening, per-sector noise. Returns t, f, e, s, removed."""
     keep = ~np.isin(np.floor(t / W10).astype(np.int64), bad); t, f, s = t[keep], f[keep], s[keep]
+    # trim orbit edges: the first 0.2 d after and last 0.1 d before every gap > 0.5 d (thermal / scattered-light ramps look like one-off dips)
+    o = np.argsort(t); t, f, s = t[o], f[o], s[o]; g = np.flatnonzero(np.diff(t) > 0.5); keep = np.ones(len(t), bool)
+    for ts in (np.r_[t[0], t[g + 1]] if len(t) else []): keep &= ~((t >= ts) & (t < ts + 0.2))
+    for te in (np.r_[t[g], t[-1]] if len(t) else []): keep &= ~((t <= te) & (t > te - 0.1))
+    t, f, s = t[keep], f[keep], s[keep]
     def sec_sig(f, s):
         e = np.zeros(len(f))
         for u in np.unique(s):
@@ -103,7 +135,7 @@ def prepare(t, f, s, bad):
     edges = np.r_[0, np.flatnonzero(np.diff(t) > 30) + 1, len(t)]        # seasons: split at gaps > 30 d
     for a, b in zip(edges[:-1], edges[1:]):
         if b - a < 300: continue
-        f[a:b], rem = sc.prewhiten(t[a:b], f[a:b]); removed += [(float(p), float(am)) for p, am in rem]
+        f[a:b], rem = prewhiten_lowmem(t[a:b], f[a:b]); removed += [(float(p), float(am)) for p, am in rem]
     t, f, s = iso_cut(t, f, s)
     for u in np.unique(s): f[s == u] /= np.median(f[s == u])
     return t, f, sec_sig(f, s), s, removed
@@ -118,13 +150,41 @@ def run_star(t, f, s, bad, nsig=3):
     return res, t, f, e, s
 
 
-def search_prepared(t, f, e, s, nsig=3, stop_snr=6.0):
-    """BLS iterations on an already cleaned light curve (used by run_star and by the injection / scrambled-null runs)."""
-    res = {}
+def is_multi(g):
+    """A periodic signal rather than one or two isolated events: at least 3 observed transits and the two strongest carry < 85 % of it."""
+    return g['ntr'] >= 3 and g.get('top2_frac', 0) < 0.85
+
+
+def single_events(t, y, w):
+    """Time-domain box search: for every duration in WINS and every start time, the dip SNR of the box against the local baseline
+    (two box-lengths on each side). Returns the per-point maximum event SNR over all boxes that contain the point
+    (y in units of the typical noise, w relative weights)."""
+    o = np.argsort(t); t_, y_, w_ = t[o], y[o], w[o]; cw = np.r_[0, np.cumsum(w_)]; cy = np.r_[0, np.cumsum(w_ * y_)]; zmax = np.zeros(len(t_))
+    def win(a, b):
+        i, j = np.searchsorted(t_, a), np.searchsorted(t_, b); return cw[j] - cw[i], cy[j] - cy[i], i, j
+    for d in WINS:
+        st = t_ - 0.25 * BINW; Wi, Si, i, j = win(st, st + d); Wl, Sl, _, _ = win(st - 2 * d, st); Wr, Sr, _, _ = win(st + d, st + 3 * d)
+        Wb, Sb = Wl + Wr, Sl + Sr; ok = (Wi >= 3) & (Wb >= Wi)
+        z = np.where(ok, (Sb / np.maximum(Wb, 1e-6) - Si / np.maximum(Wi, 1e-6)) / np.sqrt(1 / np.maximum(Wi, 1e-6) + 1 / np.maximum(Wb, 1e-6)), 0.0)
+        # spread each box's z over the points it contains (running maximum over box starts that cover the point)
+        for k in np.argsort(z)[::-1][:400]:
+            if z[k] < 4.0: break
+            seg = slice(i[k], j[k]); zmax[seg] = np.maximum(zmax[seg], z[k])
+    out = np.zeros(len(t)); out[o] = zmax
+    return out
+
+
+def search_prepared(t, f, e, s, nsig=3, stop_snr=7.0, max_iter=None):
+    """BLS iterations on an already cleaned light curve (used by run_star and by the injection / scrambled-null runs).
+    A peak made of one or two events (not is_multi) is recorded but does not count towards nsig; it is masked together with every
+    other isolated dip of comparable strength (time-domain event SNR >= max(5, 0.65 x that peak's SNR)), so one-off dips cannot
+    use up the search.  A periodic signal with >= 3 transits that strong would have out-scored the peak, so none is lost.
+    At most max_iter (default nsig + 4) BLS passes."""
+    res = {'ver': 2}; max_iter = max_iter or nsig + 4
     B = np.ptp(t); periods = period_grid(B); sig0 = float(np.median(e)); w = (sig0 / e) ** 2; y = (f - 1) / sig0
     res['mad_ppm'] = sig0 * 1e6; res['baseline'] = float(B); res['nper'] = len(periods)
-    m = np.ones(len(t), bool); sigs = []
-    for k in range(nsig):
+    m = np.ones(len(t), bool); sigs = []; zev = None; nmask = 0
+    for k in range(max_iter):
         r = bls_power(t[m], y[m], w[m], periods)
         p = r['snr']; med = np.median(p); mad = 1.4826 * np.median(np.abs(p - med)); j = int(np.argmax(p))
         snr, P, t0, dur = refine(t[m], y[m], w[m], periods[j], r['t0'][j] + t[m].min(), r['dur'][j], B)
@@ -141,7 +201,10 @@ def search_prepared(t, f, e, s, nsig=3, stop_snr=6.0):
             sg.update(nsec_in=len(d_), nsec_pos=int((d_[:, 1] > 0).sum()), snr_h1=comb(d_[:h]), snr_h2=comb(d_[h:]),
                       sec_chi2=float(np.sum(wv * (d_[:, 1] - np.sum(wv * d_[:, 1]) / wv.sum()) ** 2)))
         sigs.append(sg)
-        if snr < stop_snr: break
+        if snr < stop_snr or sum(is_multi(g) for g in sigs) >= nsig: break
         m &= ~(np.abs(ph) < 0.75 * dur / P)
-    res['signals'] = sigs
+        if not is_multi(sg):
+            if zev is None: zev = single_events(t, y, w)
+            hit = zev >= max(5.0, 0.65 * snr); nmask += int((hit & m).sum()); m &= ~hit
+    res['signals'] = sigs; res['n_event_masked'] = nmask
     return res

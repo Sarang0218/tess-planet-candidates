@@ -2,6 +2,7 @@
 import sys, os, glob, json, time, numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import deep2_core as dc
+dc.limit_gpu(2.0)
 D = '/home/sarang/tess_search'; LC = f'{D}/deep2/lc'; W = 10 / 1440
 order = {int(t): i for i, t in enumerate(pd.read_csv(f'{D}/deep2/targets.csv', usecols=['ID']).ID)}
 old_bad = np.load(f'{D}/data/bad_bins.npy')

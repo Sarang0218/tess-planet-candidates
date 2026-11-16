@@ -2,5 +2,6 @@
 
 - The report calls TIC 198079261 a new planet candidate. It was reported first by Lastovka, Barclay, Wilson & Gilbert (arXiv:2610.28518, submitted 20 October 2026). The analysis in the report is an independent recovery of their candidate.
 - The report does not include the second signal on TIC 366760231 (1.1434 d), added in v1.1.0, or the refined ephemeris of TIC 366760231.01 (P = 3.137316 ± 0.000005 d).
+- The report does not include the six candidates added in v1.2.0 (TIC 9066956, 166760940, 207503003, 38699429, 61710094, 149390648).
 
 The current statements are in the repository README.

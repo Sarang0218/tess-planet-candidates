@@ -18,6 +18,15 @@ pub = pd.read_csv(f'{D}/public/public_candidates.csv'); pub_k = {}
 for tic, P, src in zip(pub.tic, pub.P, pub.source): pub_k.setdefault(int(tic), []).append((src, float(P)))
 if os.path.exists(f'{D}/public/lastovka2026.csv'):
     for tic, P in pd.read_csv(f'{D}/public/lastovka2026.csv')[['tic', 'P']].values: pub_k.setdefault(int(tic), []).append(('Lastovka+2026', float(P)))
+if os.path.exists(f'{D}/public/t16_roth2026_candidates.csv'):          # Roth et al. 2026 (T16, Cycle 1), DIAmante (Montalto 2020, 2023), NEMESIS (Feliz 2021)
+    for tic, P in pd.read_csv(f'{D}/public/t16_roth2026_candidates.csv')[['TICID', 'P_med']].values: pub_k.setdefault(int(tic), []).append(('T16-Roth+2026', float(P)))
+    for tic in pd.read_csv(f'{D}/public/t16_roth2026_single.csv').TICID: pub_k.setdefault(int(tic), []).append(('T16-single', np.nan))
+    for v in (1, 2):
+        dm = pd.read_csv(f'{D}/public/diamante_v{v}.csv')
+        dm.columns = [c.strip() for c in dm.columns]; tc = [c for c in dm.columns if c.lower() in ('ticid', 'tic', 'tic_id', '#ticid')][0]; pc = [c for c in dm.columns if c.lower() in ('periodbls', 'period', 'periodlin')][0]
+        for tic, P in dm[[tc, pc]].values: pub_k.setdefault(int(tic), []).append((f'DIAmante-v{v}', float(P)))
+    import re as _re
+    for tic in set(_re.findall(r'\b(\d{7,10})\b', open(f'{D}/public/nemesis_feliz2021_PC_table.tex').read())): pub_k.setdefault(int(tic), []).append(('NEMESIS-Feliz+2021', np.nan))
 o3 = pd.read_csv(f'{R}/out3_signals.csv', low_memory=False); p1 = {t: list(zip(g.P, g.snr)) for t, g in o3[o3.snr >= 5].groupby('tic')}
 RATIOS = sorted({p / q for p in range(1, 5) for q in range(1, 5)})
 rows = []
