@@ -5,8 +5,8 @@ authors:
   - family-names: "Park"
     given-names: "Sarang"
     affiliation: "Korea Science Academy of KAIST"
-date-released: 2026-11-16
-version: "1.2.0"
+date-released: 2026-11-17
+version: "1.3.0"
 doi: "10.5281/zenodo.23586756"
 url: "https://github.com/Sarang0218/tess-planet-candidates"
 license: MIT

@@ -70,4 +70,4 @@ for a, b in ((f'{V}/evid/EVIDENCE_TIC{tic}.png', f'{O}/EVIDENCE_TIC{tic}.png'), 
 H = f'/mnt/c/Users/saran/tess_candidates/deep_pass/TIC{tic}'; os.makedirs(H, exist_ok=True)
 for fn in os.listdir(O):
     if fn not in ('caveats.md', 'novelty_extra.txt'): shutil.copy(f'{O}/{fn}', f'{H}/{fn}')
-print(tic, 'written;', len(vis), 'observable transits from Busan in 45 d; next:', (vis[0][0].utc + 9 * u.hour).strftime('%m/%d %H:%M KST') if vis else '-', f'± {vis[0][1]:.1f} min' if vis else '', '| max altitude', round(90 - 35.19 + me.dec), 'deg | T', me.Tmag, 'V', me.Vmag)
+print(tic, 'written;', len(vis), 'observable transits from Busan in 45 d; next:', (vis[0][0].utc + 9 * u.hour).strftime('%m/%d %H:%M KST') if vis else '-', f'± {vis[0][1]:.1f} min' if vis else '', '| max altitude', round(90 - abs(35.19 - me.dec)), 'deg | T', me.Tmag, 'V', me.Vmag)

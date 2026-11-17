@@ -56,6 +56,7 @@ for p in sorted(glob.glob(f'{D}/*_tp.fits')):
     def model(q): return q[3] * sum(r * psf(xx, yy, x + q[0], y + q[1], q[2]) for r, x, y in zip(g.rel.values[ins], sx[ins], sy[ins])) + q[4]
     mr = np.hypot(xx - xa, yy - ya) < float(os.environ.get('RREG', 2.2))          # register the scene on the pixels around the target itself
     fo = least_squares(lambda q: (model(q) - oot)[mr], [0, 0, 0.8, (oot - bg)[mr].sum(), bg], bounds=([-1.5, -1.5, 0.4, 0, -np.inf], [1.5, 1.5, 2.0, np.inf, np.inf])).x
+    if os.environ.get('NOREG'): fo = np.array([0, 0, float(os.environ.get('PSFSIG', 0.55)), 15000 * 10 ** (-0.4 * (A.Tmag - 10)), bg])      # NOREG=1: the target is too faint next to a much brighter star for the image fit to register on it; trust the pixel-file WCS (good to ~2") and a typical PSF width, target flux from its TESS magnitude
     nnull = len(nulls)
     S.append(dict(dimg=diff, px=sx[ins] + fo[0], py=sy[ins] + fo[1], ptm=g.Tmag.values[ins], pid=g.ID.values[ins], nnull=nnull, sec=int(tpf.sector), d=diff[m], w=1 / err[m] ** 2, xx=xx[m], yy=yy[m], x0=xa + fo[0], y0=ya + fo[1], sg=fo[2], F=fo[3], JE=JE, JN=JN, ntr=len(good))); ntr_tot += len(good)
     print(f'  S{int(tpf.sector)}: {len(good)} transit(s), {i_.sum()} in-transit cadences; image fit shift ({fo[0]*21:+.1f}",{fo[1]*21:+.1f}"), PSF sigma {fo[2]:.2f} px', flush=True)

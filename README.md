@@ -3,7 +3,67 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23586756.svg)](https://doi.org/10.5281/zenodo.23586756)
 
 **Author:** Sarang Park (박사랑), Korea Science Academy of KAIST. This work was a term project for General Astronomy.
-**First public posting:** 23 October 2026. **Updated:** 16 November 2026 (v1.2.0). See the commit history of this repository.
+**First public posting:** 23 October 2026. **Updated:** 17 November 2026 (v1.3.0). See the commit history of this repository.
+
+## Update, 17 November 2026 (v1.3.0)
+
+The all-sector re-search has now covered about 8,900 of 27,500 stars. This version adds six more signals, none of which I could find reported anywhere (list of sources below, rechecked on 17 November 2026). All six are **planet candidates, not confirmed planets**. Every one has a false-positive probability above the usual validation limit (0.015), so none is validated; the last two are **low confidence**.
+
+| | [**TIC 410119910.01**](candidates/TIC410119910/README.md) | [**TIC 207438179.01**](candidates/TIC207438179/README.md) | [**TIC 289623211.01**](candidates/TIC289623211/README.md) |
+|---|---|---|---|
+| Star | 2MASS J22272510−7125423 | 2MASS J16175806+5918598 | 2MASS J16564552+6318543 |
+| TESS mag, distance | 14.80, 82 pc | 14.99, 100 pc | 12.44, 41 pc |
+| Period (d) | 2.822483 ± 0.000006 | 1.443388 ± 0.000003 | 2.303123 ± 0.000004 |
+| Mid-transit (BJD_TDB) | 2460134.70149 ± 0.00204 | 2460365.49769 ± 0.00150 | 2460337.27319 ± 0.00136 |
+| Depth (ppm) | 8225 (+1036/−965) | 4110 (+458/−379) | 600 (+53/−52) |
+| Duration T14 (h) | 1.01 ± 0.06 | 0.91 ± 0.06 | 1.01 ± 0.05 |
+| Radius (R⊕) | 2.24 ± 0.19 | 1.77 ± 0.13 | 0.78 ± 0.06 |
+| Equilibrium temperature (A = 0) | 488 K | 637 K | 587 K |
+| Search SNR (highest in scrambled copies) | 8.1 (6.3) | 9.6 (7.2) | 9.8 (6.6) |
+| Sectors with positive depth | 6 of 6 | 22 of 24 | 38 of 39 |
+| Pixel fit: nearest star able to mimic it | disfavoured at only 1.9σ (T = 18.7, 8″) | disfavoured at 6.0σ | disfavoured at 4.7σ |
+| Depth from raw aperture flux / fitted depth (expected) | 0.95 ± 0.12 (0.94) | 1.01 ± 0.10 (0.95) | 0.84 ± 0.09 (0.98) |
+| TRICERATOPS FPP / NFPP | 0.037 ± 0.004 / < 0.0001 | 0.063 ± 0.002 / < 0.0001 | 0.093 ± 0.001 / 0.0004 |
+| Main weakness | only six sectors; the 8″ neighbour is not excluded by the pixels | very faint star (V = 18.2) | shallow: needs all 39 sectors |
+
+| | [**TIC 28998331.01**](candidates/TIC28998331/README.md) | [**TIC 306635997.01**](candidates/TIC306635997/README.md) | [**TIC 328936437.01**](candidates/TIC328936437/README.md) |
+|---|---|---|---|
+| Star | 2MASS J03212306+2445487 | 2MASS J08000306−6821166 | 2MASS J15021130+8325294 (wide companion of HD 135853) |
+| TESS mag, distance | 12.07, 48 pc | 14.17, 64 pc | 13.23, 67 pc |
+| Period (d) | 0.511841 ± 0.000001 | 1.823164 ± 0.000004 | 7.736415 ± 0.000031 |
+| Mid-transit (BJD_TDB) | 2460219.12841 ± 0.00176 | 2459324.75938 ± 0.00127 | 2459935.46936 ± 0.00388 |
+| Depth (ppm) | 641 (+88/−86) | 2126 (+265/−252) | 2537 (+293/−288) |
+| Duration T14 (h) | 0.59 ± 0.08 | 0.77 ± 0.07 | 1.55 ± 0.14 |
+| Radius (R⊕) | 1.08 ± 0.12 | 1.12 ± 0.10 | 1.79 ± 0.16 |
+| Equilibrium temperature (A = 0) | 1076 K | 581 K | 414 K |
+| Search SNR (highest in scrambled copies) | 9.9 (6.2) | 8.9 (6.9) | 9.4 (7.1) |
+| Sectors with positive depth | 6 of 6 | 28 of 30 | 16 of 16 |
+| Pixel fit: nearest star able to mimic it | disfavoured at 4.4σ | disfavoured at only 1.9σ (T = 19.9, 8–10″) | disfavoured at 9.1σ (`NOREG=1` variant) |
+| Depth from raw aperture flux / fitted depth (expected) | 1.07 ± 0.11 (0.98) | 1.01 ± 0.10 (0.85) | 0.52 ± 0.06 (0.61) |
+| TRICERATOPS FPP / NFPP | 0.12 / 0.002 | 0.16 / 0.020 | 0.20 / 0.069 |
+| Main weakness | Gaia RUWE 1.42 hints at an unresolved companion | **low confidence:** weak per transit, FPP 0.16, 9″ neighbour not excluded | **low confidence:** formal FPP 0.20; 64″ from a star 70 times brighter |
+
+**TIC 328936437** is the faint companion of the K0 star HD 135853, which has the same parallax and proper motion. The bright star's own light curve (MIT QLP, 10 sectors) shows 29 ± 93 ppm at this ephemeris, where about 2900 ppm would be needed, so the dip is not on HD 135853. TRICERATOPS cannot use that result, and its formal FPP of 0.20 includes the excluded scenarios. With a 1.8 R⊕ size and 414 K equilibrium temperature it is the coolest of the six. A transit on 8 December 2026 at 01:16 KST (± 11 min) is observable from Korea at about 30° altitude, but its 2.5 mmag depth is hard for a small telescope.
+
+**Lists checked for the six stars (17 November 2026):**
+- the TOI and CTOI lists downloaded that day, by TIC number and by position within 3′;
+- the ExoFOP-TESS target pages (no TOI, CTOI, observations or notes);
+- the NASA Exoplanet Archive planet and TOI tables;
+- pipeline data-validation reports at MAST (SPOC and TESS-SPOC), the SPOC 2-min TCE catalogs and the TESS-SPOC FFI TCE index. The only pipeline event on any of the six stars is a SPOC 2-min TCE at 884.9 d on TIC 289623211, which is unrelated;
+- the candidate and TCE tables of Lastovka et al. 2026 ([arXiv:2610.28518](https://arxiv.org/abs/2610.28518));
+- T16 (Roth et al. 2026), DIAmante v1/v2, NEMESIS, and Gillis, Cloutier & Pass 2026;
+- the two community lists named below, and the TESS eclipsing-binary catalog;
+- Gaia DR3 variability tables and the AAVSO VSX variable-star index;
+- the SIMBAD bibliography of each star and of HD 135853 (catalogue and target-list papers only);
+- an arXiv search of titles and abstracts for each TIC number and 2MASS name, and a web search.
+
+**Checks added in this version (code in `code/`).**
+1. **Independent re-reduction** (`deep2_indep.py`). It starts from the raw aperture flux (no pipeline systematics correction) with a generic detrend, then measures the depth against 300 other orbital phases, the best period, and the transit times in each observing season. All six recover their depth at 7.7σ or more, with the period scan peaking at the fitted period. For TIC 328936437 the raw flux is diluted by HD 135853, hence the lower expected ratio.
+2. **Old sky plates** (`deep2_archive.py`). Digitized Sky Survey images from 1946–1974 show nothing at the present positions of TIC 410119910, 207438179, 289623211 and 28998331 down to G ≈ 19.4–20.4. No usable plate exists for the other two (too little motion since the plates were taken, or no early coverage).
+3. **Gaia DR3 astrometry.** RUWE is 1.00–1.21 for five stars. TIC 28998331 has RUWE 1.42 and significant excess noise, which is listed as its main weakness.
+4. **Pixel localisation near a bright star** (`deep2_loc.py`, `NOREG=1`). The glare of HD 135853 dragged the image registration of the standard version, so TIC 328936437 was localised with positions taken from the pixel-file coordinates instead. On three v1.2.0 candidates this variant gives the same exclusions as the standard one (11.1σ vs 12.4σ, 3.5σ vs 3.5σ, 6.1σ vs 5.9σ).
+
+The same caveats as for v1.2.0 apply. The FPP values leave out background-star scenarios and do not use the pixel fit or the Gaia astrometry. Radii scale with the TIC stellar radii. Each candidate page lists its own caveats.
 
 ## Update, 16 November 2026 (v1.2.0)
 
@@ -167,7 +227,7 @@ Machine-readable ephemerides and fits are in `candidates/*/ephemeris.json` and `
    - rotation-harmonic and shared-ephemeris systematics tests;
    - cross-matching against TOIs, CTOIs, the Exoplanet Archive, all SPOC and TESS-SPOC TCEs, the TESS EB catalog and public community lists;
    - a CNN-ensemble plus gradient-boosting vetter (ranking only), trained on injected transits, TOI dispositions, TESS EBs and labelled search signals.
-5. **All-sector re-search (v1.1.0 onward, in progress):** the first pass used at most 6–8 sectors per star. Stars with at least twice as much data are being re-searched with every available sector (TESS-SPOC FFI light curves preferred), per-sector noise weights and a period grid matched to the multi-year baseline. One-off dips are masked so that they do not use up the three search slots, and the first and last hours of each orbit are trimmed. A gradient-boosting classifier trained on injected transits and scrambled light curves ranks the weaker peaks. TIC 366760231.02 was the first result; the six signals of v1.2.0 come from the first 6,300 stars.
+5. **All-sector re-search (v1.1.0 onward, in progress):** the first pass used at most 6–8 sectors per star. Stars with at least twice as much data are being re-searched with every available sector (TESS-SPOC FFI light curves preferred), per-sector noise weights and a period grid matched to the multi-year baseline. One-off dips are masked so that they do not use up the three search slots, and the first and last hours of each orbit are trimmed. A gradient-boosting classifier trained on injected transits and scrambled light curves ranks the weaker peaks. TIC 366760231.02 was the first result; the six signals of v1.2.0 come from the first 6,300 stars, and the six of v1.3.0 from the first 6,900.
 6. **Deep vetting of top candidates:**
    - independent-sector recovery with a look-elsewhere-calibrated null;
    - alias scans and per-sector depths;
